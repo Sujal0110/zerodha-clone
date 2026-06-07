@@ -1,0 +1,14 @@
+.nav-link {
+    margin-left: 35px;
+    text-decoration: none;
+    color: black;
+}
+
+.nav-link:hover {
+    color: blue;
+}
+
+.nav-link.active {
+    color: blue !important;
+    font-weight: 600;
+}
