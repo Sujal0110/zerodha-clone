@@ -12,3 +12,23 @@
     color: blue !important;
     font-weight: 600;
 }
+#supportHero {
+    background-color: rgb(56, 126, 209);
+    color: white;
+}
+#supportHero a {
+    color: white;
+    margin-right: 20px;
+}
+#suportWrapper {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 150px;
+}
+#supportHero input {
+    padding: 15px 50px;
+    width: 90%;
+    font-size: 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
