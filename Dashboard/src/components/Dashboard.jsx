@@ -1,17 +1,18 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import WatchList from "./WatchList";
+import { GeneralContextProvider } from "./GeneralContext";
 
 function Dashboard() {
     return (
-        <div className="dashboard-container">
-            {/* <GeneralContextProvider> */}
-            <WatchList />
-            {/* </GeneralContextProvider> */}
-            <div className="content">
-                <Outlet />
+        <GeneralContextProvider>
+            <div className="dashboard-container">
+                <WatchList />
+                <div className="content">
+                    <Outlet />
+                </div>
             </div>
-        </div>
+        </GeneralContextProvider>
     );
 }
 

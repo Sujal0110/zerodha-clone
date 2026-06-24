@@ -1,23 +1,20 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-function SignUp() {
+function LoginPage() {
     const [formData, setFormData] = useState({
-        username: "",
         email: "",
         password: "",
     });
-
     const notify = (msg) => toast.error(msg);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             let res = await axios.post(
-                "http://localhost:3002/auth/signup",
+                "http://localhost:3002/auth/login",
                 formData,
                 {
                     withCredentials: true,
@@ -25,13 +22,12 @@ function SignUp() {
             );
 
             if (res.data.success) {
+                localStorage.setItem("token", res.data.token);
+                localStorage.setItem("user", JSON.stringify(res.data.user));
                 setFormData({
-                    username: "",
                     email: "",
                     password: "",
                 });
-                localStorage.setItem("token", res.data.token);
-                localStorage.setItem("user", JSON.stringify(res.data.user));
                 window.location.href = "http://localhost:5174";
             }
             notify(res.data.message);
@@ -47,29 +43,12 @@ function SignUp() {
             [name]: value,
         }));
     };
-
     return (
         <div className="container" style={{ width: "50%" }}>
             <form className="row" onSubmit={handleSubmit}>
-                <h1 className="mt-4" style={{ width: "30%", margin: "0 auto" }}>
-                    Sign Up
+                <h1 className="mt-4" style={{ width: "20%", margin: "0 auto" }}>
+                    Login
                 </h1>
-
-                <div className="mt-5">
-                    <label
-                        htmlFor="exampleInputUserName"
-                        className="form-label">
-                        Username
-                    </label>
-                    <input
-                        type="text"
-                        name="username"
-                        className="form-control"
-                        id="exampleInputUserName"
-                        value={formData.username}
-                        onChange={handleChange}
-                    />
-                </div>
                 <div className="mt-5">
                     <label htmlFor="exampleInputEmail1" className="form-label">
                         Email address
@@ -83,9 +62,6 @@ function SignUp() {
                         onChange={handleChange}
                         value={formData.email}
                     />
-                    <div id="emailHelp" className="form-text">
-                        We'll never share your email with anyone else.
-                    </div>
                 </div>
                 <div className="my-5">
                     <label
@@ -106,14 +82,11 @@ function SignUp() {
                     type="submit"
                     className="btn btn-primary fs-5"
                     style={{ width: "20%", margin: "0 auto" }}>
-                    Sign up
+                    Login
                 </button>
-                <p className="text-center mt-3">
-                    Already have an account? <Link to="/login">Login</Link>
-                </p>
             </form>
         </div>
     );
 }
 
-export default SignUp;
+export default LoginPage;

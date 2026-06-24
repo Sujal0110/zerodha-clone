@@ -5,8 +5,39 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import BarChartOutlined from "@mui/icons-material/BarChartOutlined";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import GeneralContext from "./GeneralContext";
+import { useContext } from "react";
+import { DoughnutChart } from "./DoughnutChart";
 
+const labels = watchlist.map((subArray) => subArray["name"]);
 const WatchList = () => {
+    const data = {
+        labels,
+        datasets: [
+            {
+                label: "Price",
+                data: watchlist.map((stock) => stock.price),
+                backgroundColor: [
+                    "rgba(255, 99, 132, 0.5)",
+                    "rgba(54, 162, 235, 0.5)",
+                    "rgba(255, 206, 86, 0.5)",
+                    "rgba(75, 192, 192, 0.5)",
+                    "rgba(153, 102, 255, 0.5)",
+                    "rgba(255, 159, 64, 0.5)",
+                ],
+                borderColor: [
+                    "rgba(255, 99, 132, 1)",
+                    "rgba(54, 162, 235, 1)",
+                    "rgba(255, 206, 86, 1)",
+                    "rgba(75, 192, 192, 1)",
+                    "rgba(153, 102, 255, 1)",
+                    "rgba(255, 159, 64, 1)",
+                ],
+                borderWidth: 1,
+            },
+        ],
+    };
+
     return (
         <div className="watchlist-container">
             <div className="search-container">
@@ -25,13 +56,14 @@ const WatchList = () => {
                     return <WatchListItems stock={stock} key={index} />;
                 })}
             </ul>
+            <DoughnutChart data={data} />
         </div>
     );
 };
 
 export default WatchList;
 
-const WatchListItems = ({ stock, key }) => {
+const WatchListItems = ({ stock }) => {
     const [showWatchListActions, setShowWatchListActions] = useState(false);
     const handleMouseEnter = (e) => {
         setShowWatchListActions(true);
@@ -59,6 +91,7 @@ const WatchListItems = ({ stock, key }) => {
 };
 
 const WatchListActions = ({ uid }) => {
+    const generalContext = useContext(GeneralContext);
     return (
         <span className="actions">
             <span>
@@ -67,14 +100,22 @@ const WatchListActions = ({ uid }) => {
                     placement="top"
                     arrow
                     slots={{ transition: Grow }}>
-                    <button className="buy">Buy</button>
+                    <button
+                        className="buy"
+                        onClick={() => generalContext.openBuyWindow(uid)}>
+                        Buy
+                    </button>
                 </Tooltip>
                 <Tooltip
                     title="Sell (S)"
                     placement="top"
                     arrow
                     slots={{ transition: Grow }}>
-                    <button className="sell">Sell</button>
+                    <button
+                        className="sell"
+                        onClick={() => generalContext.openSellWindow(uid)}>
+                        Sell
+                    </button>
                 </Tooltip>
                 <Tooltip
                     title="Analytics (A)"

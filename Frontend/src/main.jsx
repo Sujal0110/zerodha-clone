@@ -11,10 +11,25 @@ import SupportPage from "../src/landing_pages/support/SupportPage";
 import Navbar from "./landing_pages/Navbar";
 import Footer from "./landing_pages/Footer";
 import NotFound from "./landing_pages/NotFound";
+import LoginPage from "./landing_pages/login/LoginPage";
+import { ToastContainer, Flip } from "react-toastify";
 
 function Layout() {
     return (
         <>
+            <ToastContainer
+                position="top-center"
+                autoClose={2000}
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                transition={Flip}
+            />
             <Navbar />
             <Outlet />
             <Footer />
@@ -46,6 +61,10 @@ const router = createBrowserRouter([
             {
                 path: "/signup",
                 element: <SignUp />,
+            },
+            {
+                path: "/login",
+                element: <LoginPage />,
             },
             {
                 path: "/support",

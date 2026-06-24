@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const Summary = () => {
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        axios
+            .get("http://localhost:3002/auth/me", {
+                withCredentials: true,
+            })
+            .then((res) => {
+                setUser(res.data.user);
+            })
+            .catch(() => {
+                window.location.href = "http://localhost:5173/login";
+            });
+    }, []);
+
     return (
         <>
             <div className="username">
-                <h6>Hi, User!</h6>
+                <h6>Hi, {user?.username || "User"}!</h6>
                 <hr className="divider" />
             </div>
 

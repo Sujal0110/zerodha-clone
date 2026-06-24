@@ -10,11 +10,16 @@ import Holdings from "./components/Holdings";
 import Positions from "./components/Positions";
 import Funds from "./components/Funds";
 import Apps from "./components/Apps";
+import ProtectedRoute from './components/ProtectdRoute'
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Home />,
+        element: (
+            <ProtectedRoute>
+                <Home />
+            </ProtectedRoute>
+        ),
         children: [
             { index: true, element: <Summary /> },
             { path: "orders", element: <Orders /> },

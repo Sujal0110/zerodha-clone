@@ -1,10 +1,45 @@
 import React from "react";
-import { holdings } from "../data/data";
+import { useEffect } from "react";
+import { useState } from "react";
+import axios from "axios";
+import { VerticalGraph } from "./VerticalGraph";
 
 const Holdings = () => {
+    const [allHoldings, setAllHoldings] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get("http://localhost:3002/holdings", {
+                withCredentials: true,
+            })
+            .then((res) => {
+                setAllHoldings(res.data);
+            })
+            .catch((err) => console.log(err));
+    }, []);
+
+    const labels = allHoldings.map((subArray) => subArray["name"]);
+    const data = {
+        labels,
+        datasets: [
+            {
+                label: "Stock Price",
+                data: allHoldings.map((stock) => stock.price),
+                backgroundColor: "rgba(255, 99, 132, 0.5)",
+            },
+            // {
+            //     label: "Dataset 2",
+            //     data: labels.map(() =>
+            //         faker.datatype.number({ min: 0, max: 1000 }),
+            //     ),
+            //     backgroundColor: "rgba(53, 162, 235, 0.5)",
+            // },
+        ],
+    };
+
     return (
         <>
-            <h3 className="title">Holdings ({holdings.length})</h3>
+            <h3 className="title">Holdings ({allHoldings.length})</h3>
 
             <div className="order-table">
                 <table>
@@ -21,7 +56,7 @@ const Holdings = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {holdings.map((stock, index) => {
+                        {allHoldings.map((stock, index) => {
                             const currVal = stock.price * stock.qty;
                             const isProfit =
                                 currVal - stock.avg * stock.qty >= 0.0;
@@ -67,6 +102,7 @@ const Holdings = () => {
                     <p>P&L</p>
                 </div>
             </div>
+            <VerticalGraph data={data} />
         </>
     );
 };

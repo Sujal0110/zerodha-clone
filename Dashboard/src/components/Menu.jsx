@@ -1,16 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
 
 const Menu = () => {
     const [selectedMenu, setSelectedMenu] = useState(0);
     const [isProfileDropDownOpened, setIsProfileDropDownOpened] =
         useState(false);
 
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        axios
+            .get("http://localhost:3002/auth/me", {
+                withCredentials: true,
+            })
+            .then((res) => {
+                setUser(res.data.user);
+            })
+            .catch(() => {
+                window.location.href = "http://localhost:5173/login";
+            });
+    }, []);
+
     const handleMenuClick = (index) => {
         setSelectedMenu(index);
     };
     const handleProfileClick = () => {
         setIsProfileDropDownOpened(!isProfileDropDownOpened);
+    };
+
+    const handleLogout = async () => {
+        try {
+            let res = await axios.get("http://localhost:3002/auth/logout", {
+                withCredentials: true,
+            });
+            if (res.data.success) {
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+                window.location.href = "http://localhost:5173/login";
+            }
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     const menuClass = "menu";
@@ -112,9 +143,30 @@ const Menu = () => {
                     </li>
                 </ul>
                 <hr />
-                <div className="profile" onClick={handleProfileClick}>
-                    <div className="avatar">ZU</div>
-                    <p className="username">USERID</p>
+                <div className="dropdown">
+                    <div
+                        className="d-flex align-items-center dropdown-toggle profile"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <div className="avatar me-2">
+                            {user?.username?.charAt(0).toUpperCase() || "U"}
+                        </div>
+
+                        <p className="username mb-0">
+                            {user?.username || "USERID"}
+                        </p>
+                    </div>
+
+                    <ul className="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <button
+                                className="dropdown-item"
+                                onClick={handleLogout}>
+                                Logout
+                            </button>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
