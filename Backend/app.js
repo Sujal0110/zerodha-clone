@@ -14,7 +14,7 @@ const port = process.env.PORT || 3002;
 app.use(
     cors({
         origin: [
-            "https://zerodha-frontend-gilt.vercel.app/",
+            "https://zerodha-frontend-gilt.vercel.app",
             "https://zerodha-dashboard-xi-six.vercel.app",
         ],
         credentials: true,
