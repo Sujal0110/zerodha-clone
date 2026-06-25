@@ -14,7 +14,7 @@ function LoginPage() {
         e.preventDefault();
         try {
             let res = await axios.post(
-                "http://localhost:3002/auth/login",
+                `${import.meta.env.VITE_BACKEND_URL}/auth/login`,
                 formData,
                 {
                     withCredentials: true,
@@ -28,7 +28,7 @@ function LoginPage() {
                     email: "",
                     password: "",
                 });
-                window.location.href = "http://localhost:5174";
+                window.location.href = "https://zerodha-dashboard-xi-six.vercel.app";
             }
             notify(res.data.message);
         } catch (error) {

@@ -9,7 +9,7 @@ const SellActionWindow = ({ uid }) => {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:3002/holdings/${uid}`)
+            .get(`${import.meta.env.VITE_BACKEND_URL}/holdings/${uid}`)
             .then((res) => {
                 setStockQuantity(res.data);
             })
@@ -22,7 +22,7 @@ const SellActionWindow = ({ uid }) => {
 
     const handleSellClick = () => {
         axios.post(
-            "http://localhost:3002/orders/newOrder",
+            `${import.meta.env.VITE_BACKEND_URL}/orders/newOrder`,
             {
                 name: uid,
                 qty: stockQuantity,

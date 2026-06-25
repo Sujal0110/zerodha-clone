@@ -7,7 +7,7 @@ function ProtectedRoute({ children }) {
 
     useEffect(() => {
         axios
-            .get("http://localhost:3002/auth/verify", {
+            .get(`${import.meta.env.VITE_BACKEND_URL}/auth/verify`, {
                 withCredentials: true,
             })
             .then((res) => {
@@ -23,7 +23,7 @@ function ProtectedRoute({ children }) {
     if (loading) return <h1>Loading...</h1>;
 
     if (!authorized) {
-        window.location.href = "http://localhost:5173/signup";
+        window.location.href = "https://zerodha-frontend-gilt.vercel.app/signup";
         return null;
     }
 

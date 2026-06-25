@@ -6,14 +6,14 @@ const Summary = () => {
 
     useEffect(() => {
         axios
-            .get("http://localhost:3002/auth/me", {
+            .get(`${import.meta.env.VITE_BACKEND_URL}auth/me`, {
                 withCredentials: true,
             })
             .then((res) => {
                 setUser(res.data.user);
             })
             .catch(() => {
-                window.location.href = "http://localhost:5173/login";
+                window.location.href = "https://zerodha-frontend-gilt.vercel.app/login";
             });
     }, []);
 

@@ -11,14 +11,14 @@ const Menu = () => {
 
     useEffect(() => {
         axios
-            .get("http://localhost:3002/auth/me", {
+            .get(`${import.meta.env.VITE_BACKEND_URL}/auth/me`, {
                 withCredentials: true,
             })
             .then((res) => {
                 setUser(res.data.user);
             })
             .catch(() => {
-                window.location.href = "http://localhost:5173/login";
+                window.location.href = "https://zerodha-frontend-gilt.vercel.app/login";
             });
     }, []);
 
@@ -31,13 +31,16 @@ const Menu = () => {
 
     const handleLogout = async () => {
         try {
-            let res = await axios.get("http://localhost:3002/auth/logout", {
-                withCredentials: true,
-            });
+            let res = await axios.get(
+                `${import.meta.env.VITE_BACKEND_URL}/auth/logout`,
+                {
+                    withCredentials: true,
+                },
+            );
             if (res.data.success) {
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
-                window.location.href = "http://localhost:5173/login";
+                window.location.href = "https://zerodha-frontend-gilt.vercel.app/login";
             }
         } catch (err) {
             console.log(err);

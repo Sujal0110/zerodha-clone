@@ -13,7 +13,10 @@ const app = express();
 const port = process.env.PORT || 3002;
 app.use(
     cors({
-        origin: ["http://localhost:5173", "http://localhost:5174"],
+        origin: [
+            "https://zerodha-frontend-gilt.vercel.app/",
+            "https://zerodha-dashboard-xi-six.vercel.app",
+        ],
         credentials: true,
     }),
 );

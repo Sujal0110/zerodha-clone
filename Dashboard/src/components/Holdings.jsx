@@ -9,7 +9,7 @@ const Holdings = () => {
 
     useEffect(() => {
         axios
-            .get("http://localhost:3002/holdings", {
+            .get(`${import.meta.env.VITE_BACKEND_URL}/holdings`, {
                 withCredentials: true,
             })
             .then((res) => {
@@ -27,13 +27,6 @@ const Holdings = () => {
                 data: allHoldings.map((stock) => stock.price),
                 backgroundColor: "rgba(255, 99, 132, 0.5)",
             },
-            // {
-            //     label: "Dataset 2",
-            //     data: labels.map(() =>
-            //         faker.datatype.number({ min: 0, max: 1000 }),
-            //     ),
-            //     backgroundColor: "rgba(53, 162, 235, 0.5)",
-            // },
         ],
     };
 

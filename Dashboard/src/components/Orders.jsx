@@ -7,7 +7,7 @@ const Orders = () => {
     const [allOrders, setAllOrders] = useState([]);
     useEffect(() => {
         axios
-            .get("http://localhost:3002/orders/allOrders", {
+            .get(`${import.meta.env.VITE_BACKEND_URL}/orders/allOrders`, {
                 withCredentials: true,
             })
             .then((res) => {
